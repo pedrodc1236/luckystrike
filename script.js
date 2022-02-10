@@ -4,4 +4,4 @@ const api = async (nomePokemon) => {
   return data;
 };
 
-console.log(api('charizard'));
+console.log(api('pikachu'));
