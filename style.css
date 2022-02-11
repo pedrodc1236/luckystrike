@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Luxurious+Roman&display=swap');
+
 :root {
 --mustard: #fbd743ff;
 --red-ryb: #ff1f1fff;
@@ -30,6 +32,14 @@ main {
 
 #time-name {
   padding: 12px 20px;
+  margin-top: 5px;
+  width: 250px;
+  border: 2px solid black;
+  border-radius: 50px;
+}
+
+#type {
+  list-style: none;
 }
 
 #aside {
@@ -39,6 +49,23 @@ main {
   width: 300px;
   margin-left: 150px;
   font-size: 25px;
+  font-family: 'Luxurious Roman', cursive;
+}
+
+aside label {
+  font-size: 18px;
+}
+
+#team-data {
+  border: 2px solid black;
+  border-radius: 10px;
+  color: var(--dark-slate-blue);
+  font-weight: bolder;
+  width: 250px;
+  height: 180px;
+  font-size: 14px;
+  padding: 10px;
+  background-color: var(--mustard);
 }
 
 .card-pokemon {
@@ -62,6 +89,12 @@ main {
   flex-direction: column;
   justify-content: center;
   margin-right: 200px;
+}
+
+#name-team {
+  align-self: center;
+  font-family: 'Luxurious Roman', cursive;
+  font-size: 25px;
 }
 
 .row {
@@ -92,11 +125,15 @@ footer {
   text-align: center;
   text-decoration: none;
   cursor: pointer;
-  padding: 15px 32px;
+  padding: 15px 30px;
   border: none;
   background-color: var(--mustard);
   color: var(--dark-slate-blue);
   transition: 500ms;
+  font-weight: bolder;
+  font-size: 14px;
+  border: 2px solid black;
+  border-radius: 50px;
 }
 
 .buttons:hover {
