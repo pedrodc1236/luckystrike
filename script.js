@@ -23,6 +23,15 @@ const randomFunction = async () => {
   }
 }
 
+const menu = async () => {
+  const popUp = document.createElement('div');
+  const inputName = document.createElement('input');
+  inputName.setAttribute('placeholder', 'Nome do pokemon:');
+  popUp.appendChild(inputName);
+  const listaInfo = document.createElement('ul');
+  popUp.appendChild(listaInfo);
+}
+
 window.onload = () => {
   input.addEventListener('input', changeName);
 };
