@@ -23,16 +23,18 @@ const allPokemons = async () => {
 
 const pokeNames = async () => {
   const fun = await allPokemons();
-  return fun.map((names) => names.name);
+  const names = fun.map((names) => names.name);
+  return names;
   /* console.log(fun.map((names) => names.name)); */
 };
 
 const toUpper = async () => {
   const names = await pokeNames();
-  console.log(names.forEach((name) => name[0].toUpperCase()))
+  names.forEach((name) => {
+    return name[0].toUpperCase() + name.substring(1);
+    // console.log(name[0].toUpperCase() + name.substring(1));
+  });
 }
-
-toUpper();
 
 
 const randomFunction = async () => {
@@ -56,6 +58,7 @@ const menu = async () => {
 
 window.onload = () => {
   input.addEventListener('input', changeName);
+  toUpper();
 };
 
 
