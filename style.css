@@ -8,6 +8,7 @@
 
 body {
   background-color: var(--platinum);
+  margin: 0;
 }
 
 .header-img {
@@ -27,12 +28,17 @@ main {
   color: var(--platinum);
 }
 
+#time-name {
+  padding: 12px 20px;
+}
+
 #aside {
   display: flex;
-  flex-wrap: wrap;
-  align-content: space-around;
+  flex-flow: wrap column;
+  justify-content: space-around;
   width: 300px;
-  margin-left: 15 0px;
+  margin-left: 150px;
+  font-size: 25px;
 }
 
 .card-pokemon {
@@ -41,12 +47,14 @@ main {
   margin-right: 40px;
   background-color: var(--mustard);
   transition: 500ms;
+  border-radius: 5px;
 }
 
 .card-pokemon:hover {
   box-shadow: 5px 5px 15px -1px rgba(197, 197, 197, 0.46);
   width: 160px;
   height: 210px;
+  cursor: pointer;
 }
 
 #time {
@@ -69,4 +77,20 @@ footer {
 
 .footer-img {
   width: 450px;
+}
+
+.buttons {
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 15px 32px;
+  border: none;
+  background-color: var(--mustard);
+  color: var(--dark-slate-blue);
+  transition: 500ms;
+}
+
+.buttons:hover {
+  border: 1px solid var(--platinum);
+  background-color: var(--platinum);
 }

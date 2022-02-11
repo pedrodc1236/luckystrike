@@ -16,14 +16,23 @@
   <main>
     <aside id="aside">
       <label>Nome do Time:
-        <input id='time-name' type="text" placeholder="Nome do time aqui">
+        <input id='time-name' type="text" placeholder="Digite aqui">
       </label>
-      <div id="team-data"></div>
-      <button id="btn-save">Salvar time</button>
-      <button id="btn-random">Random</button>
+      <div id="team-data">
+        <h4>Tipos de pokemón:</h4>
+        <ul>
+          <li>Fogo</li>
+          <li>Grama</li>
+          <li>Água</li>
+        </ul>
+      </div>
+      <div class="btns">
+        <button class="buttons" id="btn-save">Salvar time</button>
+        <button class="buttons" id="btn-random">Time aletório</button>
+      </div>
     </aside>
     <section id="time">
-      <h2 id="nome-time"></h2>
+      <h2 id="nome-time">Nome do Time</h2>
       <div id="top" class="row">
         <div id="card1" class="card-pokemon"></div>
         <div id="card2" class="card-pokemon"></div>
