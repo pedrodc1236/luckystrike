@@ -1,7 +1,8 @@
 const api = async (nomePokemon) => {
   const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${nomePokemon}/`);
-  const data = response.json();
-  return data;
+  const data = await response.json();
+  /* return data; */
+  console.log(data);
 };
 
-console.log(api('pikachu'));
+window.onload = api('pikachu') ;
