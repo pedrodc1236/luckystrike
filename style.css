@@ -79,6 +79,15 @@ footer {
   width: 450px;
 }
 
+.question {
+  width: 150px;
+  transition: 500ms;
+}
+
+.question:hover {
+  width: 160px;
+}
+
 .buttons {
   text-align: center;
   text-decoration: none;
