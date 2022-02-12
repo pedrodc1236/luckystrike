@@ -1,7 +1,9 @@
-const urlAll = 'https://pokeapi.co/api/v2/pokemon/?offset=20&limit=1118';
+const urlAll = 'https://pokeapi.co/api/v2/pokemon/?offset=0&limit=898';
 const urlSimple = 'https://pokeapi.co/api/v2/pokemon/';
 const input = document.querySelector('#time-name');
 const timeName = document.querySelector('#name-team');
+const cards = document.querySelectorAll('.card-pokemon');
+const randomBtn = document.querySelector('#btn-random');
 
 const changeName = () => {
   timeName.innerText = input.value;
@@ -30,31 +32,37 @@ const pokeNames = async () => {
 
 const toUpper = async () => {
   const names = await pokeNames();
-  names.forEach((name) => {
-    return name[0].toUpperCase() + name.substring(1);
-    // console.log(name[0].toUpperCase() + name.substring(1));
-  });
-}
+  const capitalizedNames = names.map(([first, ...name]) => `${first.toUpperCase()}${name.join('')}`);
+  return capitalizedNames;
+};
 
+//url: 'https://pokeapi.co/api/v2/pokemon/58/'
 
 const randomFunction = async () => {
-  let counter = 0;
-  while (counter < 6) {
-    const id = Math.floor((Math.random() * 1098) + 1);
-    const response = await fetch(`${url}${id}/`);
-    const data = response.json();
-    counter += 1;
-  }
-}
+  cards.forEach(async (card) => {
+    const id = Math.floor((Math.random() * 898) + 1);
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`);
+    const data = await response.json();
+    const firstDiv = card.firstElementChild;
+    const pokeName = firstDiv.firstElementChild;
+    pokeName.innerText = data.name;
+    pokeName.style.display = 'block';
+    const pokeImg = firstDiv.lastElementChild;
+    pokeImg.setAttribute('src', data.sprites.front_default);
+    pokeImg.style.width = '120px';
+  })
+} 
 
-const menu = async () => {
-  const popUp = document.createElement('div');
-  const inputName = document.createElement('input');
-  inputName.setAttribute('placeholder', 'Nome do pokemon:');
-  popUp.appendChild(inputName);
-  const listaInfo = document.createElement('ul');
-  popUp.appendChild(listaInfo);
+randomBtn.addEventListener('click', randomFunction);
+
+
+const foda = async () => {
+  const id = Math.floor((Math.random() * 898) + 1);
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`);
+  const data = await response.json();
+  console.log(data);
 }
+foda();
 
 window.onload = () => {
   input.addEventListener('input', changeName);
@@ -69,7 +77,6 @@ window.onload = () => {
 let modal = document.getElementById("myModal");
 
 // Get the button that opens the modal
-let cards = document.querySelectorAll(".card-pokemon");
 cards.forEach((card) => {
   card.onclick = function() {
     modal.style.display = "block";
@@ -91,4 +98,4 @@ window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
-}
+} 
