@@ -60,15 +60,23 @@ const foda = async () => {
   const id = Math.floor((Math.random() * 898) + 1);
   const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`);
   const data = await response.json();
-  console.log(data);
+ // console.log(data);
 }
 foda();
 
-window.onload = () => {
-  input.addEventListener('input', changeName);
-  toUpper();
-};
-
+async function getStats (name) {
+  const divInfo = document.querySelector('.info');
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}/`);
+  const data = await response.json();
+  const status = data.stats;
+  status.forEach((stats) => {
+    const name = stats.stat.name;
+    const rating = stats.base_stat;
+    const string = `${name}: ${rating}`;
+    divInfo.append(string);
+  })
+}
+getStats('charizard');
 
 
 /* Modal */
@@ -95,6 +103,7 @@ span.onclick = function() {
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
+  input.addEventListener('input', changeName);
   if (event.target == modal) {
     modal.style.display = "none";
   }
