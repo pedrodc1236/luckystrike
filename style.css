@@ -76,6 +76,7 @@ aside label {
   margin-right: 40px;
   background-color: var(--mustard);
   transition: 500ms;
+  border: 4px outset #000000ed;
   border-radius: 5px;
 }
 
@@ -84,6 +85,31 @@ aside label {
   width: 160px;
   height: 210px;
   cursor: pointer;
+}
+
+.image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.poke-name{
+  display: none;
+  text-align: center;
+  padding: 5px 0;
+  width: 100%;
+  background-color: var(--dark-slate-blue);
+  color: var(--mustard);
+  text-transform: capitalize;
+}
+
+.question {
+  width: 150px;
+  transition: 500ms;
+}
+
+.question:hover {
+  width: 160px;
 }
 
 #time {
@@ -112,15 +138,6 @@ footer {
 
 .footer-img {
   width: 450px;
-}
-
-.question {
-  width: 150px;
-  transition: 500ms;
-}
-
-.question:hover {
-  width: 160px;
 }
 
 .buttons {
