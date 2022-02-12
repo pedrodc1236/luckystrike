@@ -10,6 +10,11 @@ const questionModal = document.getElementById('question-modal')
 const btnYes = document.getElementById('btn-yes')
 const btnNo = document.getElementById('btn-no')
 
+const headerImg = document.querySelector('.header-img')
+
+headerImg.addEventListener('click', function reload() {
+  document.location.reload(true);
+})
 
 const changeName = () => {
   timeName.innerText = input.value;
@@ -66,12 +71,18 @@ const noAdd = () => {
   btnNo.classList.add('hidden');
 };
 
-const add = () => {
+const add = (card) => {
   modal.style.display = "none";
   const inputImg = document.getElementById('input-img')
   const imgLink = inputImg.getAttribute('src');
   const text = questionModal.innerText;
-  sliced = text.substring(10,text.length - 13);
+  const sliced = text.substring(10,text.length - 13);
+  // Tentativa de atribuir qual carta foi clicada
+/*   const pokeField = card.firstElementChild;
+  const h4 = pokeField.firstElementChild;
+  const img = pokeField.lastElementChild;
+  h4.innerText = sliced;
+  img.setAttribute('src', imgLink) */
 }
 
 btnNo.addEventListener('click', noAdd)
