@@ -112,11 +112,6 @@ aside label {
   width: 160px;
 }
 
-.info {
-display:none;
-}
-
-
 #time {
   display: flex;
   flex-direction: column;
@@ -128,6 +123,16 @@ display:none;
   align-self: center;
   font-family: 'Permanent Marker', cursive;
   font-size: 25px;
+}
+
+.poke-list {
+  overflow: scroll;
+  max-height: 200px;
+}
+
+.list-item {
+  color: black;
+  text-transform: capitalize;
 }
 
 .row {

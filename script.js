@@ -30,11 +30,25 @@ const pokeNames = async () => {
   /* console.log(fun.map((names) => names.name)); */
 };
 
-const toUpper = async () => {
+const loadList = async () => {
   const names = await pokeNames();
-  const capitalizedNames = names.map(([first, ...name]) => `${first.toUpperCase()}${name.join('')}`);
-  return capitalizedNames;
-};
+  names.forEach(async (name) => {
+    const search = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+    const data = await search.json();
+    const li = document.createElement('li')
+    const img = document.createElement('img')
+    const pokePic = data.sprites.front_default;
+    img.setAttribute('src', pokePic);
+    img.className = 'poke-image';
+    li.className = 'list-item';
+    li.innerText = name;
+    document.querySelector('.poke-list').appendChild(li);
+    li.append(img);
+    /* document.querySelector('.poke-list').appendChild(img); */
+  });
+}
+
+loadList();
 
 //url: 'https://pokeapi.co/api/v2/pokemon/58/'
 
@@ -56,15 +70,7 @@ const randomFunction = async () => {
 randomBtn.addEventListener('click', randomFunction);
 
 
-const foda = async () => {
-  const id = Math.floor((Math.random() * 898) + 1);
-  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`);
-  const data = await response.json();
- // console.log(data);
-}
-foda();
-
-async function getStats (name) {
+/* async function getStats (name) {
   const divInfo = document.querySelector('.info');
   const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}/`);
   const data = await response.json();
@@ -77,7 +83,7 @@ async function getStats (name) {
   })
 }
 getStats('charizard');
-
+ */
 
 /* Modal */
 
