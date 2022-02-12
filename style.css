@@ -68,6 +68,34 @@ aside label {
   font-size: 14px;
   padding: 10px;
   background-color: var(--mustard);
+  perspective: 1000px;
+}
+
+.team-data-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+#team-data:hover .team-data-inner {
+  transform: rotateX(180deg);
+}
+
+.team-data-front, .team-data-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+.team-data-back {
+  background-color: dodgerblue;
+  color: white;
+  transform: rotateX(180deg);
 }
 
 .card-pokemon {
@@ -126,8 +154,10 @@ aside label {
 }
 
 .poke-list {
+  display: flex;
+  flex-direction: column;
   overflow: auto;
-  max-height: 200px;
+  max-height: 350px;
 }
 
 .list-item {
@@ -136,6 +166,8 @@ aside label {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  margin-bottom: 10px;
 }
 
 .row {
@@ -182,13 +214,14 @@ footer {
   top: 0;
   width: 100%; /* Full width */
   height: 100%; /* Full height */
-  overflow: auto; Enable scroll if needed
+  overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
 /* Modal Content/Box */
 .modal-content {
+  display: flex;
   background-color: var(--platinum);
   margin: 15% auto; /* 15% from the top and centered */
   padding: 20px;
@@ -196,10 +229,30 @@ footer {
   width: 25%; /* Could be more or less, depending on screen size */
 }
 
+.input-area {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-modal {
+  align-self: flex-start;
+  margin-top: 40px;
+}
+
+#question-modal {
+  color: black;
+  font-size: 13.5px;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
 /* The Close Button */
 .close {
+  align-self: flex-start;
   color: #aaa;
-  float: right;
   font-size: 28px;
   font-weight: bold;
 }

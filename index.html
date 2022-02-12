@@ -19,14 +19,25 @@
       <label>Nome do Time:
         <input id='time-name' type="text" placeholder="Digite aqui">
       </label>
+
+      <!-- Team Data -->
       <div id="team-data">
-        <h4>Tipos de pokemón:</h4>
-        <ul id="type">
-          <li>Fogo</li>
-          <li>Grama</li>
-          <li>Água</li>
-        </ul>
+        <div class="team-data-inner">
+          <div class="team-data-front">
+            <h4>Tipos de pokemón:</h4>
+            <ul id="type">
+              <li>Fogo</li>
+              <li>Grama</li>
+              <li>Água</li>
+            </ul>
+          </div>
+          <div class="team-data-back">
+            <img class="question" src="assets/pokemonquestion.png">
+          </div>
+        </div>
       </div>
+
+      <!-- Botões -->
       <div class="btns">
         <button class="buttons" id="btn-save">Salvar time</button>
         <button class="buttons" id="btn-random">Time aletório</button>
@@ -88,7 +99,13 @@
         <!-- Modal content -->
         <div class="modal-content">
         <span class="close">&times;</span>
-        <input class="input-modal" type="text" placeholder="Qual Pokemon você quer?"><br>
+        <div class="input-area">
+          <input class="input-modal" type="text" placeholder="Qual Pokemon você quer?">
+          <img id="input-img" class="hidden">
+          <p id="question-modal" class="hidden"></p>
+          <button id="btn-yes" class="hidden">Sim</button>
+          <button id="btn-no" class="hidden">Não</button>
+        </div>
         <ul class="poke-list">
         </ul>
         </div>

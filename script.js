@@ -5,6 +5,12 @@ const timeName = document.querySelector('#name-team');
 const cards = document.querySelectorAll('.card-pokemon');
 const randomBtn = document.querySelector('#btn-random');
 
+const inputImg = document.getElementById('input-img')
+const questionModal = document.getElementById('question-modal')
+const btnYes = document.getElementById('btn-yes')
+const btnNo = document.getElementById('btn-no')
+
+
 const changeName = () => {
   timeName.innerText = input.value;
 }
@@ -30,12 +36,54 @@ const pokeNames = async () => {
   /* console.log(fun.map((names) => names.name)); */
 };
 
+const addPokemon = async (event) => {
+  if (event.target.nodeName === 'LI') {
+    inputImg.classList.remove('hidden');
+    questionModal.classList.remove('hidden');
+    btnYes.classList.remove('hidden');
+    btnNo.classList.remove('hidden');
+  
+    const img = event.target.firstElementChild;
+    const imgLink = img.getAttribute('src');
+    inputImg.setAttribute('src', imgLink);
+    questionModal.innerText = `Adicionar ${event.target.innerText} ao seu time?`
+  } else {
+    inputImg.classList.remove('hidden');
+    questionModal.classList.remove('hidden');
+    btnYes.classList.remove('hidden');
+    btnNo.classList.remove('hidden');
+    const img = event.target;
+    const imgLink = img.getAttribute('src');
+    inputImg.setAttribute('src', imgLink);
+    questionModal.innerText = `Adicionar ${event.target.parentElement.innerText} ao seu time?`
+  }
+};
+
+const noAdd = () => {
+  inputImg.classList.add('hidden');
+  questionModal.classList.add('hidden');
+  btnYes.classList.add('hidden');
+  btnNo.classList.add('hidden');
+};
+
+const add = () => {
+  modal.style.display = "none";
+  const inputImg = document.getElementById('input-img')
+  const imgLink = inputImg.getAttribute('src');
+  const text = questionModal.innerText;
+  sliced = text.substring(10,text.length - 13);
+}
+
+btnNo.addEventListener('click', noAdd)
+btnYes.addEventListener('click', add)
+
 const loadList = async () => {
   const names = await pokeNames();
   names.forEach(async (name) => {
     const search = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
     const data = await search.json();
     const li = document.createElement('li')
+    li.addEventListener('click', addPokemon);
     const img = document.createElement('img')
     const pokePic = data.sprites.front_default;
     img.setAttribute('src', pokePic);
@@ -44,7 +92,6 @@ const loadList = async () => {
     li.innerText = name;
     document.querySelector('.poke-list').appendChild(li);
     li.append(img);
-    /* document.querySelector('.poke-list').appendChild(img); */
   });
 }
 
