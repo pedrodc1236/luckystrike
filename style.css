@@ -112,6 +112,11 @@ aside label {
   width: 160px;
 }
 
+.info {
+display:none;
+}
+
+
 #time {
   display: flex;
   flex-direction: column;
@@ -197,3 +202,4 @@ footer {
   text-decoration: none;
   cursor: pointer;
 }
+
