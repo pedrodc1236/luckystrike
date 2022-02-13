@@ -12,6 +12,12 @@ const btnNo = document.getElementById('btn-no')
 
 const headerImg = document.querySelector('.header-img')
 
+let btnYesTrue = false;
+
+const trueAndFalse = () => {
+  btnYesTrue = false;
+}
+
 headerImg.addEventListener('click', function reload() {
   document.location.reload(true);
 })
@@ -71,18 +77,24 @@ const noAdd = () => {
   btnNo.classList.add('hidden');
 };
 
-const add = (card) => {
+
+const add = () => {
   modal.style.display = "none";
   const inputImg = document.getElementById('input-img')
   const imgLink = inputImg.getAttribute('src');
   const text = questionModal.innerText;
   const sliced = text.substring(10,text.length - 13);
   // Tentativa de atribuir qual carta foi clicada
-/*   const pokeField = card.firstElementChild;
-  const h4 = pokeField.firstElementChild;
-  const img = pokeField.lastElementChild;
+  const pokeField = document.querySelector('.selected');
+  const first = pokeField.firstElementChild;
+  console.log(first);
+  const h4 = first.firstElementChild;
+  h4.style.display = 'block';
+  const img = first.lastElementChild;
   h4.innerText = sliced;
-  img.setAttribute('src', imgLink) */
+  img.setAttribute('src', imgLink)
+  removeSelected();
+  displayHidden();
 }
 
 btnNo.addEventListener('click', noAdd)
@@ -141,7 +153,21 @@ randomBtn.addEventListener('click', randomFunction);
   })
 }
 getStats('charizard');
- */
+*/
+
+const removeSelected = () => {
+  cards.forEach((card) => {
+    if(card.classList.contains('selected'))
+    card.classList.remove('selected')
+  })
+}
+
+const displayHidden = () => {
+  inputImg.classList.add('hidden');
+  questionModal.classList.add('hidden');
+  btnYes.classList.add('hidden');
+  btnNo.classList.add('hidden');
+}
 
 /* Modal */
 
@@ -152,6 +178,7 @@ let modal = document.getElementById("myModal");
 cards.forEach((card) => {
   card.onclick = function() {
     modal.style.display = "block";
+    card.classList.add("selected");
   }
 });
 
@@ -163,6 +190,8 @@ let span = document.querySelector(".close");
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
   modal.style.display = "none";
+  removeSelected();
+  displayHidden();
 }
 
 // When the user clicks anywhere outside of the modal, close it
@@ -170,5 +199,9 @@ window.onclick = function(event) {
   input.addEventListener('input', changeName);
   if (event.target == modal) {
     modal.style.display = "none";
+    removeSelected();
+    displayHidden();
   }
 } 
+
+window.onload = { trueAndFalse };
