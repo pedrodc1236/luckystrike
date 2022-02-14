@@ -15,10 +15,11 @@ const span = document.querySelector(".close");
 const inputModal = document.querySelector('.input-modal');
 const pokeList = document.querySelector('.poke-list');
 const saveBtn = document.getElementById('btn-save');
-
 const ulFather = document.querySelector('.team-data-back')
 const typesArray = [];
 
+
+// Função que limpa o nome do time, as cartas e suas informações;
 const clear = () => {
   localStorage.clear()
   timeName.innerText = 'Nome do Time';
@@ -34,16 +35,19 @@ const clear = () => {
   ulFather.removeChild(ulFather.lastElementChild)
 }
 
+// Variável que armazena todos escutadores de evento;
 const functionsListeners = () => {
   saveBtn.addEventListener('click', save);
   btnNo.addEventListener('click', noAdd)
   btnYes.addEventListener('click', add)
   btnClear.addEventListener('click', clear);
+  randomBtn.addEventListener('click', randomFunction);
+
   // Ao clicar na logo, o site é recarregado;
   headerImg.addEventListener('click', function reload() {
     document.location.reload(true);
   })
-  randomBtn.addEventListener('click', randomFunction);
+
   // Quando clicar no <span>, o modal é fechado. Além disso os elementos internos do modal voltam a ficar escondidos e a classe selected é esvaziada;
   span.onclick = function() {
     modal.style.display = "none";
@@ -61,7 +65,8 @@ const functionsListeners = () => {
       displayHidden();
       inputModal.value = '';
     }
-  } 
+  }
+
   // Cria uma lista nova filtrada a cada tecla do input;
   inputModal.addEventListener('input', namesFiltered);
 }
@@ -70,12 +75,14 @@ const functionsListeners = () => {
 const changeName = () => {
   timeName.innerText = input.value;
 
-  const teamName = () => {
-    localStorage.setItem('teamName', input.value)
+// Adiciona uma chave no localStorage e a atualiza a cada input do nome do time;
+const teamName = () => {
+  localStorage.setItem('teamName', input.value)
   };
   input.addEventListener('input', teamName)
 }
 
+// Salva as informações do time;
 const save = () => {
   cards.forEach((card, index) => {
     const filho = card.firstElementChild.innerHTML;
@@ -83,7 +90,7 @@ const save = () => {
   })
 }
 
-
+// Recupera os valores do localStorage;
 const getSaved = () => {
   const tamanho = localStorage.length;
   if (tamanho >= 6) {
@@ -194,6 +201,7 @@ const randomFunction = async () => {
   })
 }
 
+// Adiciona todos tipos de pokemons presentes nas cartas à lista de tipos;
 const addPokeType = () => {
   cards.forEach( async (card) => {
     const h4 = card.firstElementChild.firstElementChild;
@@ -205,7 +213,7 @@ const addPokeType = () => {
   })
 }
 
-
+// Recupera os tipos de pokemon através de requisição na API;
 async function getTypes (name) {
   ulFather.removeChild(ulFather.lastChild);
   const ul = document.createElement('ul');
@@ -245,7 +253,6 @@ const displayHidden = async () => {
   loadList(pokeNomes);
 }
 
-/* Modal */
 // Função que abre o modal;
 const cardsFunctions = () => {
   cards.forEach((card) => {
@@ -280,7 +287,6 @@ window.onload = async () => {
   functionsListeners();
   addPokeType();
 }
-const sum = (a,b) => a+b;
 
 module.exports = { save,
   getSaved,
@@ -289,4 +295,4 @@ module.exports = { save,
   removeSelected,
   cardsFunctions,
   filterNames, 
-};
+}
