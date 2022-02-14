@@ -4,19 +4,12 @@ const input = document.querySelector('#time-name');
 const timeName = document.querySelector('#name-team');
 const cards = document.querySelectorAll('.card-pokemon');
 const randomBtn = document.querySelector('#btn-random');
-
 const inputImg = document.getElementById('input-img')
 const questionModal = document.getElementById('question-modal')
-const btnYes = document.getElementById('btn-yes')
-const btnNo = document.getElementById('btn-no')
-
-const headerImg = document.querySelector('.header-img')
-
-let btnYesTrue = false;
-
-const trueAndFalse = () => {
-  btnYesTrue = false;
-}
+const btnYes = document.getElementById('btn-yes');
+const btnNo = document.getElementById('btn-no');
+const headerImg = document.querySelector('.header-img');
+const inputModal = document.querySelector('.input-modal');
 
 headerImg.addEventListener('click', function reload() {
   document.location.reload(true);
@@ -25,13 +18,6 @@ headerImg.addEventListener('click', function reload() {
 const changeName = () => {
   timeName.innerText = input.value;
 }
-
-const api = async (nomePokemon) => {
-  const response = await fetch(`${url}${nomePokemon}/`);
-  const data = await response.json();
-  /* return data; */
-  console.log(data);
-};
 
 const allPokemons = async () => {
   const response = await fetch(urlAll);
@@ -47,13 +33,12 @@ const pokeNames = async () => {
   /* console.log(fun.map((names) => names.name)); */
 };
 
-const addPokemon = async (event) => {
+const addPokemon = (event) => {
   if (event.target.nodeName === 'LI') {
     inputImg.classList.remove('hidden');
     questionModal.classList.remove('hidden');
     btnYes.classList.remove('hidden');
     btnNo.classList.remove('hidden');
-  
     const img = event.target.firstElementChild;
     const imgLink = img.getAttribute('src');
     inputImg.setAttribute('src', imgLink);
@@ -87,7 +72,6 @@ const add = () => {
   // Tentativa de atribuir qual carta foi clicada
   const pokeField = document.querySelector('.selected');
   const first = pokeField.firstElementChild;
-  console.log(first);
   const h4 = first.firstElementChild;
   h4.style.display = 'block';
   const img = first.lastElementChild;
@@ -100,8 +84,7 @@ const add = () => {
 btnNo.addEventListener('click', noAdd)
 btnYes.addEventListener('click', add)
 
-const loadList = async () => {
-  const names = await pokeNames();
+const loadList = async (names) => {
   names.forEach(async (name) => {
     const search = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
     const data = await search.json();
@@ -117,10 +100,6 @@ const loadList = async () => {
     li.append(img);
   });
 }
-
-loadList();
-
-//url: 'https://pokeapi.co/api/v2/pokemon/58/'
 
 const randomFunction = async () => {
   cards.forEach(async (card) => {
@@ -172,7 +151,7 @@ const displayHidden = () => {
 /* Modal */
 
 // Get the modal
-let modal = document.getElementById("myModal");
+const modal = document.getElementById("myModal");
 
 // Get the button that opens the modal
 cards.forEach((card) => {
@@ -183,7 +162,7 @@ cards.forEach((card) => {
 });
 
 // Get the <span> element that closes the modal
-let span = document.querySelector(".close");
+const span = document.querySelector(".close");
 
 // When the user clicks on the button, open the modal
 
@@ -192,16 +171,36 @@ span.onclick = function() {
   modal.style.display = "none";
   removeSelected();
   displayHidden();
+  inputModal.value = '';
 }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
   input.addEventListener('input', changeName);
-  if (event.target == modal) {
+  if (event.target === modal) {
     modal.style.display = "none";
     removeSelected();
     displayHidden();
+    inputModal.value = '';
   }
 } 
 
-window.onload = { trueAndFalse };
+const filterNames = async () => {
+  const lower = inputModal.value.toLowerCase();
+  const length = lower.length;
+  const allNames = await pokeNames();
+  const filtered = allNames.filter((nome) => nome.substr(0, length) === lower);
+  return filtered;
+};
+
+const namesFiltered = async () => {
+  const filtered = await filterNames();
+  loadList(filtered);
+}
+
+inputModal.addEventListener('input', namesFiltered);
+
+window.onload = async () => {
+  const names = await pokeNames();
+  loadList(names);
+}
