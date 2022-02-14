@@ -16,10 +16,36 @@ const pokeList = document.querySelector('.poke-list');
 const saveBtn = document.getElementById('btn-save');
 const team = document.querySelector('#all-team');
 
-// Ao clicar na logo, o site é recarregado;
-headerImg.addEventListener('click', function reload() {
-  document.location.reload(true);
-})
+const functionsListeners = () => {
+  saveBtn.addEventListener('click', save);
+  btnNo.addEventListener('click', noAdd)
+  btnYes.addEventListener('click', add)
+  // Ao clicar na logo, o site é recarregado;
+  headerImg.addEventListener('click', function reload() {
+    document.location.reload(true);
+  })
+  randomBtn.addEventListener('click', randomFunction);
+  // Quando clicar no <span>, o modal é fechado. Além disso os elementos internos do modal voltam a ficar escondidos e a classe selected é esvaziada;
+  span.onclick = function() {
+    modal.style.display = "none";
+    removeSelected();
+    displayHidden();
+    inputModal.value = '';
+  }
+  
+  // Quando é clicado fora do modal, ele é fechado. Além disso os elementos internos do modal voltam a ficar escondidos e a classe selected é esvaziada;
+  window.onclick = function(event) {
+    input.addEventListener('input', changeName);
+    if (event.target === modal) {
+      modal.style.display = "none";
+      removeSelected();
+      displayHidden();
+      inputModal.value = '';
+    }
+  } 
+  // Cria uma lista nova filtrada a cada tecla do input;
+  inputModal.addEventListener('input', namesFiltered);
+}
 
 // Função para inserir o nome do time com base no valor do input;
 const changeName = () => {
@@ -33,7 +59,6 @@ const save = () => {
   })
 }
 
-saveBtn.addEventListener('click', save);
 
 const getSaved = () => {
   const tamanho = localStorage.length;
@@ -106,8 +131,6 @@ const add = () => {
   displayHidden();
 }
 
-btnNo.addEventListener('click', noAdd)
-btnYes.addEventListener('click', add)
 
 // Função que carrega a lista de Pokemons com base no array dado a ela;
 const loadList = (names) => {
@@ -144,7 +167,6 @@ const randomFunction = async () => {
   })
 } 
 
-randomBtn.addEventListener('click', randomFunction);
 
 
 /* async function getStats (name) {
@@ -192,24 +214,6 @@ const cardsFunctions = () => {
   }); 
 }
 
-// Quando clicar no <span>, o modal é fechado. Além disso os elementos internos do modal voltam a ficar escondidos e a classe selected é esvaziada;
-span.onclick = function() {
-  modal.style.display = "none";
-  removeSelected();
-  displayHidden();
-  inputModal.value = '';
-}
-
-// Quando é clicado fora do modal, ele é fechado. Além disso os elementos internos do modal voltam a ficar escondidos e a classe selected é esvaziada;
-window.onclick = function(event) {
-  input.addEventListener('input', changeName);
-  if (event.target === modal) {
-    modal.style.display = "none";
-    removeSelected();
-    displayHidden();
-    inputModal.value = '';
-  }
-} 
 
 // Recebe os valores do input, os converte em lowerCase e compara com a lista de nomes de pokemons para filtrar e retorna a lista filtrada;
 const filterNames = async () => {
@@ -231,6 +235,15 @@ window.onload = async () => {
   loadList(names);
   getSaved();
   cardsFunctions();
-  // Cria uma lista nova filtrada a cada tecla do input;
-  inputModal.addEventListener('input', namesFiltered);
+  functionsListeners();
 }
+const sum = (a,b) => a+b;
+
+module.exports = { save,
+  getSaved,
+  pokeNames,
+  loadList,
+  removeSelected,
+  cardsFunctions,
+  filterNames, 
+};
