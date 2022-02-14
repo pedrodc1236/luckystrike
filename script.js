@@ -8,18 +8,37 @@ const inputImg = document.getElementById('input-img')
 const questionModal = document.getElementById('question-modal')
 const btnYes = document.getElementById('btn-yes');
 const btnNo = document.getElementById('btn-no');
+const btnClear = document.getElementById('btn-clear');
 const headerImg = document.querySelector('.header-img');
 const modal = document.getElementById("myModal");
 const span = document.querySelector(".close");
 const inputModal = document.querySelector('.input-modal');
 const pokeList = document.querySelector('.poke-list');
 const saveBtn = document.getElementById('btn-save');
-const team = document.querySelector('#all-team');
+
+const ulFather = document.querySelector('.team-data-back')
+const typesArray = [];
+
+const clear = () => {
+  localStorage.clear()
+  timeName.innerText = 'Nome do Time';
+
+  cards.forEach((card) => {
+    const container = card.firstElementChild;
+    const h4 = container.firstElementChild;
+    h4.style.display = 'none';
+    h4.innerText = '';
+    const img = container.lastElementChild;
+    img.setAttribute('src', "assets/pokemonquestion.png");
+  })
+  ulFather.removeChild(ulFather.lastElementChild)
+}
 
 const functionsListeners = () => {
   saveBtn.addEventListener('click', save);
   btnNo.addEventListener('click', noAdd)
   btnYes.addEventListener('click', add)
+  btnClear.addEventListener('click', clear);
   // Ao clicar na logo, o site é recarregado;
   headerImg.addEventListener('click', function reload() {
     document.location.reload(true);
@@ -50,6 +69,11 @@ const functionsListeners = () => {
 // Função para inserir o nome do time com base no valor do input;
 const changeName = () => {
   timeName.innerText = input.value;
+
+  const teamName = () => {
+    localStorage.setItem('teamName', input.value)
+  };
+  input.addEventListener('input', teamName)
 }
 
 const save = () => {
@@ -62,12 +86,13 @@ const save = () => {
 
 const getSaved = () => {
   const tamanho = localStorage.length;
-  if (tamanho === 6) {
+  if (tamanho >= 6) {
     cards.forEach((card, index) => {
       const value = JSON.parse(localStorage.getItem(index));
       const filho = card.firstElementChild;
       filho.innerHTML = value;
     })
+    timeName.innerText = localStorage.getItem('teamName')
   }
 }
 
@@ -124,11 +149,12 @@ const add = () => {
   const first = pokeField.firstElementChild;
   const h4 = first.firstElementChild;
   h4.style.display = 'block';
-  const img = first.lastElementChild;
+  const img = first.lastElementChild
   h4.innerText = sliced;
   img.setAttribute('src', imgLink)
   removeSelected();
   displayHidden();
+  addPokeType();
 }
 
 
@@ -164,25 +190,41 @@ const randomFunction = async () => {
     const pokeImg = firstDiv.lastElementChild;
     pokeImg.setAttribute('src', data.sprites.front_default);
     pokeImg.style.width = '120px';
-  })
-} 
-
-
-
-/* async function getStats (name) {
-  const divInfo = document.querySelector('.info');
-  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}/`);
-  const data = await response.json();
-  const status = data.stats;
-  status.forEach((stats) => {
-    const name = stats.stat.name;
-    const rating = stats.base_stat;
-    const string = `${name}: ${rating}`;
-    divInfo.append(string);
+    addPokeType();
   })
 }
-getStats('charizard');
-*/
+
+const addPokeType = () => {
+  cards.forEach( async (card) => {
+    const h4 = card.firstElementChild.firstElementChild;
+    const text = h4.innerText;
+    const lower = text.toLowerCase();
+    if (lower.length > 0) {
+      await getTypes(lower);
+    }
+  })
+}
+
+
+async function getTypes (name) {
+  ulFather.removeChild(ulFather.lastChild);
+  const ul = document.createElement('ul');
+  ulFather.appendChild(ul)
+  ul.setAttribute('id', 'type')
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}/`);
+  const data = await response.json();
+  const types = data.types;
+  types.forEach((type) => {
+    const typeName = type.type.name;
+    typesArray.push(typeName);
+  })
+  const newArray = [...new Set(typesArray)];
+  newArray.forEach((element) => {
+    const li = document.createElement('li');
+    li.innerText = element;
+    ul.appendChild(li)
+  })
+}
 
 // Função que 'zera' a classe selected;
 const removeSelected = () => {
@@ -236,6 +278,7 @@ window.onload = async () => {
   getSaved();
   cardsFunctions();
   functionsListeners();
+  addPokeType();
 }
 const sum = (a,b) => a+b;
 
