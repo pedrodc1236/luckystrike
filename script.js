@@ -90,7 +90,7 @@ const add = () => {
 btnNo.addEventListener('click', noAdd)
 btnYes.addEventListener('click', add)
 
-
+// Função que carrega a lista de Pokemons com base no array dado a ela;
 const loadList = (names) => {
   names.forEach(async (name) => {
     pokeList.innerHTML = [];
@@ -187,20 +187,22 @@ window.onclick = function(event) {
   }
 } 
 
-const filterNames = async (event) => {
-  const lower = event.target.value.toLowerCase();
+// Recebe os valores do input, os converte em lowerCase e compara com a lista de nomes de pokemons para filtrar e retorna a lista filtrada;
+const filterNames = async () => {
+  const lower = inputModal.value.toLowerCase();
   const length = lower.length;
   const allNames = await pokeNames();
   const filtered = allNames.filter((nome) => nome.substr(0, length) === lower);
   return filtered;
 };
 
-const namesFiltered = async (event) => {
-  const filtered = await filterNames(event);
-  console.log(filtered);
+// Armazena a lista filtrada em uma variável e usa ela de parâmetro para carregar a lista;
+const namesFiltered = async () => {
+  const filtered = await filterNames();
   loadList(filtered);
 }
 
+// Cria uma lista nova filtrada a cada tecla do input;
 inputModal.addEventListener('input', namesFiltered);
 
 window.onload = async () => {
