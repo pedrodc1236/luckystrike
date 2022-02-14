@@ -42,6 +42,10 @@ main {
 
 #type {
   list-style: none;
+  margin: 0;
+  display: flex;
+  flex-flow: column wrap;
+  max-height: 220px;
 }
 
 #aside {
@@ -76,6 +80,11 @@ aside label {
 .image-types {
   width: 100px;
   height: 70px;
+}
+
+#ul-title {
+  margin-top: 0;
+  margin-bottom: 5px;
 }
 
 
