@@ -16,28 +16,33 @@ const pokeList = document.querySelector('.poke-list');
 const saveBtn = document.getElementById('btn-save');
 const team = document.querySelector('#all-team');
 
-
-// Função para inserir o nome do time com base no valor do input;
 // Ao clicar na logo, o site é recarregado;
 headerImg.addEventListener('click', function reload() {
   document.location.reload(true);
 })
+
+// Função para inserir o nome do time com base no valor do input;
 const changeName = () => {
   timeName.innerText = input.value;
 }
 
 const save = () => {
-  const inner = team.innerHTML;
-  localStorage.setItem('team', JSON.stringify(inner));
+  cards.forEach((card, index) => {
+    const filho = card.firstElementChild.innerHTML;
+    localStorage.setItem(index, JSON.stringify(filho));
+  })
 }
 
 saveBtn.addEventListener('click', save);
 
 const getSaved = () => {
-  const item = JSON.parse(localStorage.getItem('team'));
-  if (item) {
-    team.innerHTML = item;
-    cardsFunctions();
+  const tamanho = localStorage.length;
+  if (tamanho === 6) {
+    cards.forEach((card, index) => {
+      const value = JSON.parse(localStorage.getItem(index));
+      const filho = card.firstElementChild;
+      filho.innerHTML = value;
+    })
   }
 }
 
@@ -221,13 +226,11 @@ const namesFiltered = async () => {
   loadList(filtered);
 }
 
-
-
 window.onload = async () => {
   const names = await pokeNames();
   loadList(names);
   getSaved();
   cardsFunctions();
   // Cria uma lista nova filtrada a cada tecla do input;
-inputModal.addEventListener('input', namesFiltered);
+  inputModal.addEventListener('input', namesFiltered);
 }
