@@ -83,6 +83,7 @@ aside label {
 }
 
 #ul-title {
+  font-size: 16px;
   margin-top: 0;
   margin-bottom: 5px;
 }
@@ -180,6 +181,10 @@ footer {
   width: 450px;
 }
 
+.btns {
+  display: flex;
+}
+
 .buttons {
   text-align: center;
   text-decoration: none;
@@ -193,7 +198,10 @@ footer {
   font-size: 14px;
   border: 2px solid black;
   border-radius: 50px;
+  margin: 5px;
+  justify-content: center;
 }
+
 
 .buttons:hover {
   border: 1px solid var(--platinum);
