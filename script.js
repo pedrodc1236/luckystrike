@@ -50,6 +50,11 @@ const functionsListeners = () => {
 // Função para inserir o nome do time com base no valor do input;
 const changeName = () => {
   timeName.innerText = input.value;
+
+  const teamName = () => {
+    localStorage.setItem('teamName', input.value)
+  };
+  input.addEventListener('input', teamName)
 }
 
 const save = () => {
@@ -62,12 +67,13 @@ const save = () => {
 
 const getSaved = () => {
   const tamanho = localStorage.length;
-  if (tamanho === 6) {
+  if (tamanho >= 6) {
     cards.forEach((card, index) => {
       const value = JSON.parse(localStorage.getItem(index));
       const filho = card.firstElementChild;
       filho.innerHTML = value;
     })
+    timeName.innerText = localStorage.getItem('teamName')
   }
 }
 
