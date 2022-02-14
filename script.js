@@ -13,15 +13,32 @@ const modal = document.getElementById("myModal");
 const span = document.querySelector(".close");
 const inputModal = document.querySelector('.input-modal');
 const pokeList = document.querySelector('.poke-list');
+const saveBtn = document.getElementById('btn-save');
+const team = document.querySelector('#all-team');
 
+
+// Função para inserir o nome do time com base no valor do input;
 // Ao clicar na logo, o site é recarregado;
 headerImg.addEventListener('click', function reload() {
   document.location.reload(true);
 })
-
-// Função para inserir o nome do time com base no valor do input;
 const changeName = () => {
   timeName.innerText = input.value;
+}
+
+const save = () => {
+  const inner = team.innerHTML;
+  localStorage.setItem('team', JSON.stringify(inner));
+}
+
+saveBtn.addEventListener('click', save);
+
+const getSaved = () => {
+  const item = JSON.parse(localStorage.getItem('team'));
+  if (item) {
+    team.innerHTML = item;
+    cardsFunctions();
+  }
 }
 
 // Retorna objeto com nome e url de todos pokemons;
@@ -109,7 +126,7 @@ const loadList = (names) => {
 // Ao clicar no botão 'Time Aleatório', gera uma requisição à API para cada carta e o pokemón designado (com base em um número aleatório) é inserido na carta;
 const randomFunction = async () => {
   cards.forEach(async (card) => {
-    const id = Math.floor((Math.random() * 1000) + 1);
+    const id = Math.floor((Math.random() * 899) + 1);
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`);
     const data = await response.json();
     const firstDiv = card.firstElementChild;
@@ -149,21 +166,26 @@ const removeSelected = () => {
 }
 
 // Função que novamente esconde os elementos do modal;
-const displayHidden = () => {
+const displayHidden = async () => {
   inputImg.classList.add('hidden');
   questionModal.classList.add('hidden');
   btnYes.classList.add('hidden');
   btnNo.classList.add('hidden');
+  inputModal.value = '';
+  const pokeNomes = await pokeNames();
+  loadList(pokeNomes);
 }
 
 /* Modal */
 // Função que abre o modal;
-cards.forEach((card) => {
-  card.onclick = function() {
-    modal.style.display = "block";
-    card.classList.add("selected");
-  }
-}); 
+const cardsFunctions = () => {
+  cards.forEach((card) => {
+    card.onclick = function() {
+      modal.style.display = "block";
+      card.classList.add("selected");
+    }
+  }); 
+}
 
 // Quando clicar no <span>, o modal é fechado. Além disso os elementos internos do modal voltam a ficar escondidos e a classe selected é esvaziada;
 span.onclick = function() {
@@ -199,10 +221,13 @@ const namesFiltered = async () => {
   loadList(filtered);
 }
 
-// Cria uma lista nova filtrada a cada tecla do input;
-inputModal.addEventListener('input', namesFiltered);
+
 
 window.onload = async () => {
   const names = await pokeNames();
   loadList(names);
+  getSaved();
+  cardsFunctions();
+  // Cria uma lista nova filtrada a cada tecla do input;
+inputModal.addEventListener('input', namesFiltered);
 }
