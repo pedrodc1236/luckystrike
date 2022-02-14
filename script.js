@@ -63,10 +63,7 @@ const addPokemon = (event) => {
 
 // Se o 'não' for clicado, os elementos voltam a desaparecer;
 const noAdd = () => {
-  inputImg.classList.add('hidden');
-  questionModal.classList.add('hidden');
-  btnYes.classList.add('hidden');
-  btnNo.classList.add('hidden');
+  displayHidden();
 };
 
 // Se o 'sim' for clicado, o pokemon é adicionado à carta selecionada;
