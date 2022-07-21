@@ -173,6 +173,7 @@ const loadList = (names) => {
     const data = await search.json();
     const li = document.createElement('li')
     li.addEventListener('click', addPokemon);
+   
     const img = document.createElement('img')
     const pokePic = data.sprites.front_default;
     img.setAttribute('src', pokePic);
